@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/assets/ripple-logo.png" alt="Mercury Server Logo" width="320" />
+  <img src="docs/assets/ripple-logo.png" alt="Mercury Server Logo" width="420" />
   <h1>R.I.P.P.L.E</h1>
   <p><i>Real-time Integrated Physics & Particle Liquid Engine</i></p>
 
