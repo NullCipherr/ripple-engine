@@ -1,0 +1,247 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b1220;
+  --bg-soft: #111b2d;
+  --card: #18263d;
+  --line: #2d4268;
+  --text: #e8f1ff;
+  --muted: #9db4d6;
+  --accent: #3ecf8e;
+  --accent-2: #4ea1ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: 'Segoe UI', 'Inter', 'Roboto', sans-serif;
+  background: radial-gradient(circle at top, #172741 0%, var(--bg) 52%, #060b14 100%);
+  color: var(--text);
+}
+
+body {
+  padding: 1rem;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 1rem;
+  max-width: 1480px;
+  margin: 0 auto;
+}
+
+.viewer,
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+}
+
+.viewer {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem;
+  min-height: calc(100vh - 2rem);
+}
+
+#fluid-canvas {
+  flex: 1;
+  width: 100%;
+  min-height: 520px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0f111a;
+}
+
+.hint {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.panel {
+  padding: 1rem;
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+}
+
+.panel h1 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.panel p {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.metrics div {
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  border-radius: 10px;
+  padding: 0.6rem;
+}
+
+.metrics span {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.metrics strong {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 1rem;
+}
+
+.controls {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.controls label {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.88rem;
+}
+
+.controls select,
+.controls input[type='range'] {
+  width: 100%;
+}
+
+.controls select {
+  background: var(--bg-soft);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.45rem 0.5rem;
+}
+
+.controls span {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.real-world-controls {
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.65rem;
+  display: grid;
+  gap: 0.55rem;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.real-world-controls legend {
+  padding: 0 0.35rem;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.real-world-controls input[type='number'] {
+  width: 100%;
+  background: var(--bg-soft);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.45rem 0.5rem;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+}
+
+.actions button {
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  color: #081223;
+  border-radius: 9px;
+  font-weight: 600;
+  padding: 0.6rem;
+  cursor: pointer;
+}
+
+.actions button:hover,
+.actions button:focus-visible {
+  filter: brightness(1.08);
+}
+
+.actions button:focus-visible,
+.controls select:focus-visible,
+.controls input:focus-visible {
+  outline: 2px solid #cce0ff;
+  outline-offset: 2px;
+}
+
+.automation {
+  border: 1px solid var(--line);
+  background: var(--bg-soft);
+  border-radius: 10px;
+  padding: 0.75rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.automation button {
+  border: 1px solid transparent;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+  color: #081223;
+  border-radius: 9px;
+  font-weight: 600;
+  padding: 0.6rem;
+  cursor: pointer;
+}
+
+.automation button:hover,
+.automation button:focus-visible {
+  filter: brightness(1.08);
+}
+
+.automation p {
+  margin: 0;
+}
+
+.automation-hint {
+  font-size: 0.84rem;
+}
+
+@media (max-width: 1080px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .viewer {
+    min-height: 60vh;
+  }
+
+  #fluid-canvas {
+    min-height: 420px;
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
+  }
+}

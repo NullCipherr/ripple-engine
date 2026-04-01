@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fluid Engine Demo</title>
+    <meta
+      name="description"
+      content="Tela demo da Fluid Engine para validação de simulação, rendering e interação."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="layout" aria-label="Demonstração da Fluid Engine">
+      <section class="viewer" aria-label="Área da simulação">
+        <canvas id="fluid-canvas" aria-label="Canvas da simulação de fluidos"></canvas>
+        <p class="hint">
+          Arraste com botão esquerdo para injetar fluido. Botão direito inverte a força. Obstáculos podem ser arrastados.
+        </p>
+      </section>
+
+      <aside class="panel" aria-label="Controles da demonstração">
+        <header>
+          <h1>Fluid Engine Demo</h1>
+          <p>Ambiente de teste para validar solver, partículas e renderização.</p>
+        </header>
+
+        <section class="metrics" aria-label="Métricas em tempo real">
+          <div><span>FPS</span><strong id="metric-fps">0</strong></div>
+          <div><span>Frame (ms)</span><strong id="metric-frame">0.00</strong></div>
+          <div><span>Partículas</span><strong id="metric-particles">0</strong></div>
+          <div><span>Memória (MB)</span><strong id="metric-memory">0.00</strong></div>
+          <div><span>Backend</span><strong id="metric-backend">-</strong></div>
+        </section>
+
+        <section class="controls" aria-label="Configuração da simulação">
+          <label>
+            Modo de visualização
+            <select id="view-mode">
+              <option value="density">Densidade</option>
+              <option value="diffuse">Difuso (realista)</option>
+              <option value="velocity">Velocidade</option>
+              <option value="pressure">Pressão</option>
+              <option value="particles">Partículas</option>
+            </select>
+          </label>
+
+          <label>
+            Paleta
+            <select id="palette">
+              <option value="default">Default</option>
+              <option value="fire">Fire</option>
+              <option value="ocean">Ocean</option>
+              <option value="plasma">Plasma</option>
+            </select>
+          </label>
+
+          <label>
+            Tipo de fluido
+            <select id="fluid-type">
+              <option value="liquid">Líquido</option>
+              <option value="gas">Gás</option>
+              <option value="smoke">Fumaça</option>
+              <option value="plasma">Plasma</option>
+            </select>
+          </label>
+
+          <fieldset class="real-world-controls">
+            <legend>Parâmetros físicos reais (fluido selecionado)</legend>
+            <label class="checkbox">
+              <input id="rw-auto-color-temperature" type="checkbox" checked />
+              Cor espectral automática por temperatura
+            </label>
+            <label>
+              Densidade (kg/m³)
+              <input id="rw-density" type="number" min="0.01" step="0.01" />
+            </label>
+            <label>
+              Viscosidade dinâmica (Pa·s)
+              <input id="rw-viscosity" type="number" min="0.0000001" step="0.0000001" />
+            </label>
+            <label>
+              Temperatura do fluido (°C)
+              <input id="rw-temperature" type="number" step="0.1" />
+            </label>
+            <label>
+              Temperatura ambiente (°C)
+              <input id="rw-ambient-temperature" type="number" step="0.1" />
+            </label>
+            <label>
+              Turbulência (0-1)
+              <input id="rw-turbulence" type="number" min="0" max="1" step="0.01" />
+            </label>
+            <label>
+              Amortecimento de momento (1/s)
+              <input id="rw-momentum-damping" type="number" min="0.01" step="0.01" />
+            </label>
+            <label>
+              Meia-vida da densidade (s)
+              <input id="rw-density-half-life" type="number" min="0.1" step="0.1" />
+            </label>
+            <label>
+              Difusão (m²/s)
+              <input id="rw-diffusion" type="number" min="0.0000000001" step="0.0000000001" />
+            </label>
+          </fieldset>
+
+          <label>
+            Back-end de render
+            <select id="render-backend">
+              <option value="classic">Classic</option>
+              <option value="experimental-gpu">Experimental GPU</option>
+              <option value="webgpu-experimental">WebGPU (Experimental)</option>
+            </select>
+          </label>
+
+          <label>
+            Intensidade de impulso
+            <input id="impulse-force" type="range" min="1" max="30" step="1" value="10" />
+            <span id="impulse-force-value">10</span>
+          </label>
+
+          <label>
+            Viscosidade
+            <input id="viscosity" type="range" min="0" max="0.01" step="0.0005" value="0.001" />
+            <span id="viscosity-value">0.0010</span>
+          </label>
+
+          <label>
+            Vorticidade
+            <input id="vorticity" type="range" min="0" max="10" step="0.1" value="2" />
+            <span id="vorticity-value">2.0</span>
+          </label>
+
+          <label class="checkbox">
+            <input id="show-grid" type="checkbox" /> Mostrar grade
+          </label>
+
+          <label class="checkbox">
+            <input id="show-trails" type="checkbox" checked /> Mostrar trilhas
+          </label>
+        </section>
+
+        <section class="actions" aria-label="Ações rápidas">
+          <button id="add-circle" type="button">Adicionar círculo</button>
+          <button id="add-rect" type="button">Adicionar retângulo</button>
+          <button id="clear-obstacles" type="button">Limpar obstáculos</button>
+          <button id="reset-engine" type="button">Resetar simulação</button>
+        </section>
+
+        <section class="automation" aria-label="Cenários automáticos">
+          <button id="auto-scenarios-toggle" type="button">Pausar auto cenários</button>
+          <p>Status: <strong id="auto-scenarios-status">Ativo</strong></p>
+          <p class="automation-hint">
+            Alterna automaticamente entre os tipos de fluido e emite impulsos em loop para validação visual.
+          </p>
+        </section>
+      </aside>
+    </main>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+{
+  "name": "@nullcipherr/ripple-engine",
+  "version": "1.0.0",
+  "description": "Engine de simulação 2D de fluidos com solver, obstáculos, partículas e renderer WebGL2.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "docs",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "clean": "rm -rf dist",
+    "lint": "tsc --noEmit -p tsconfig.json",
+    "quality:gate": "npm run lint && npm run test && npm run build",
+    "demo": "vite demo --host",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run clean && npm run lint && npm run test && npm run build"
+  },
+  "keywords": [
+    "fluid",
+    "simulation",
+    "webgl",
+    "typescript",
+    "engine"
+  ],
+  "author": "NullCipherr",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/NullCipherr/ripple-engine.git"
+  },
+  "homepage": "https://github.com/NullCipherr/ripple-engine",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.2",
+    "vitest": "^3.2.4"
+  }
+}
